@@ -1,11 +1,19 @@
-CommunalCoin - Time Limited Coins, which are issued to offset the lost value of the system and constantly distributed equally as a dividend for Peer Owners.
-============
+CommunalCoin- a coin of respect! Time Limited Coins, which are issued to offset the lost value of the system and constantly distributed equally as a dividend for Peer Owners.
+=========
 From http://communal-coin.wikidot.com/blog:1 and Under agpl http://www.gnu.org/licenses/why-affero-gpl.html 
 
 CommunalCoin constantly lose its value in time as each member in the local (using coin) community constantly gets an equal dividend offsetting the lost value of the coin in that system and hence the shorter is the lifetime of the coin the better is the distribution in that system.
-=========
+====
 
 See it at http://communal-coin.wikidot.com/local--files/main:start/communal-coin.png
+It's a p2p project, the next after the bitcoin, since bitcoin is like gold and CommunalCoin, as a coin of respect, is locally managed as truly decentralized non money currency. It is implemented via mail too and in the end we should have it working on local or Cloud Computing with optional sync, while having a kind of online banking for that.
+Please conatct only as you can be really sure about privacy if you would like to go with us on that direction.
+This project is one part of much bigger project.- Equaly Own to Make Yourself Stronger In Your Group and in Your society!
+Search: Yes I AM Angry to get http://yes-i-am-angry.wikidot.com/
+It is based on these 6 points: http://is-with.wikidot.com/6-points
+find your comcomized mailing list would be at the http://peers.cc
+Politician: http://iswith.wikidot.com/govcomcom
+Developer: http://comcomist.wikidot.com/ 
 
 It is designed for use, within and between bottom up organizations, as a value of gift or rewarding, which is also able to be re-given (as is the case in payment), for to compensate, share thankfulness and/or respect.
 
