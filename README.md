@@ -1,15 +1,33 @@
 CommunalCoin - a coin of respect!
 =================================
 
+Note: Each member is this prject is to become peer owner (http://is-with.wikidot.com/) over its source!
+
 Summary
 -------
 
 Time Limited Coins, which are issued to offset the lost value of the system and constantly distributed equally as a dividend for Peer Owners. Source: http://communal-coin.wikidot.com/blog:1 License: AGPL (affero-gpl).
 
+
+The network protocol description:
+----------
+(unpdated from http://communal-coin.wikidot.com/ ):   delivering coin of respect is by delivering the receipt[n] having the id(coin), where each member has both tables: Repository and Log, but only the coin's owner knows the receipt[n] having the id(coin) having the owner signature, such that
+        receipt[n] = (random[n] signed by coin's owner,Hashed(receipt[n-1] ),
+        Repository-table(all peers wallets collection):Hashed(id(coin)) => receipt[n] Asymmetrically encrypted by coin's Owner,
+        Log-table:Hashed(receipt[n]) => signed by sender-owner (id(coin),id(receiver-Owner)) 	
+            Wallet 	      Repository
+Encrypted 	id(coin) 	    id(reciver)
+plan text 	id(reciver) 	id(coin)
+
+Notes:
+    the minimal amount of items in each table = coins amount + noise,
+    delivering the receipt[n] is done by first making a call to the peers to verify whether the transaction in the log has the coin and if yes to change the coin to have the new transacion[n+1] and to create it
+    to hash is of hashing-without-collusion: for (x=0;x<X;x++) Y=SHA256(Y), where X<1 and X is the number of creating hash on the hash until having no hash-collusion, and then X and Y are concatenated with the and X is given as token to the user as additional parameter.
+
 Description
 -----------
 
-CommunalCoin constantly lose its value in time as each member in the local (using coin) community constantly gets an equal dividend offsetting the lost value of the coin in that system and hence the shorter is the lifetime of the coin the better is the distribution in that system.
+CommunalCoin constantly lose its value in time as each member in the local (using coin) community constantly (periodically or by specific members decision) gets an equal dividend offsetting the lost value of the coin in that system and hence the shorter is the lifetime of the coin the better is the distribution in that system.
 
 See it at http://communal-coin.wikidot.com/local--files/main:start/communal-coin.png
 
