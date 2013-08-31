@@ -19,6 +19,7 @@ Delivering coin of respect is by delivering the receipt[n] having the id(coin), 
 + Log-table:Hashed(receipt[n]) => signed by sender-owner (id(coin),id(receiver-Owner)
 Encrypted: 	[Wallet-case] id(coin)    [Repository-case]	    id(reciver)
 plan text: 	[Wallet-case]id(reciver) [Repository-case]	id(coin)
+
 Notes:
 + the minimal amount of items in each table = coins amount + noise,
 + delivering the receipt[n] is done by first making a call to the peers to verify whether the transaction in the log has the coin and if yes to change the coin to have the new transacion[n+1] and to create it
