@@ -1,6 +1,6 @@
 /*** licensed under the agpl: http://www.gnu.org/licenses/agpl-3.0.html   ***/
 /***                  author: http://namzezam.wikidot.com/ ***/
-/***                About it: http://namzezam.wdfiles.com/local--files/start/Why%20and%20How%20to%20become%20Free%20and%20Equal%20people%20owning%20as%20teams%20ComComs%20and%20trading%20as%20individuals%20in%20Rcoin.txt ***/
+/***                About it: http://namzezam.wdfiles.com/local--files/start/rcoin.txt ***/
 #ifndef defined_rcoin
 #define defined_rcoin   /** rcoin - A coin of respect is a time limited and
 equally re-distributed cyclic and communal coin. It is daily and gradually
