@@ -1,6 +1,6 @@
-/*** licensed under the agpl: http://www.gnu.org/licenses/agpl-3.0.html   ***/
-/***                  author: http://namzezam.wikidot.com/ ***/
-/***                About it: http://namzezam.wdfiles.com/local--files/start/rcoin.txt ***/
+/*** Licensed under the Agpl: http://www.gnu.org/licenses/agpl-3.0.html    ***/
+/***    Author: http://namzezam.wikidot.com/                               ***/
+/***    Preamble: http://namzezam.wdfiles.com/local--files/start/rcoin.txt ***/
 #ifndef defined_rcoin
 #define defined_rcoin   /** rcoin - A coin of respect is a time limited and
 equally re-distributed cyclic and communal coin. It is daily and gradually
@@ -90,7 +90,7 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 *  when being operator is rotated between members the app is democratic,    *
 *  otherwise centric).                                                      *
 * Here are the 3 data categories:                                           *
-*  Movements    = <Coins@op[id(coin)] Wallet@My [Rand]Log@op>               *
+*  Movements    = <Coins@op[id(coin)] Wallet@My [Rand]Log@op,CoinsId@op>    *
 *  Values       =<Worth@My [same-format]Treasury@op>                        *
 *  Identities   =<Self@My[pic]Payers@My , Users@op[register]Profiles@op>    *
 * Any access/modification in sensitive and common area is resulted in       *
@@ -100,13 +100,16 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 * next op etc.*
 
 
-Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op>
+Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op,CoinsId@op>
 Coins@op = the Movements of all coins starts and ends here. It consists of
     One table having one record having 2 blob: 1 of all Hash(Id(coin))
     of valid coins and the other of those which are expired,to be used
     for maintenance of their uniqueness before issuing new coins.
         Q??  should n't Coins@op  have id LastDate Lifetime of coin for no
-        collusion and keeping coherence without having StartValue??
+        collusion and keeping coherence without having StartValue?? 
+CoinsId@op={hash(Coinsid)=>[(Rand)],,,}
+        @op (of all coins), Rand is the last Rand of the translation made 
+         with that coin for to insure no twice payment.
 Wallet@My={hash(id(coin))=>[(Rand,RandPrev,coin)]
        }@My (of this member's coins), where
        only by id(coin) the access to the value of the coin is given!
@@ -115,11 +118,16 @@ Log@op={hash(Rand)=>[(id(Owner),si[Payer](Rand,id(Owner)),Chain)],
     the hash(pic)==id(user) and a unique triplepin is used as a key for all
     such pic, making each pic able to be changed Not as in the biometric info!
 
-Values=<Worth@My [same-format]Treasury@op>
+Values=<Worth@My [same-format]Treasury@op,,>
 Treasury@op={LastDate=>[CoinLifetime(SumStartValue,TheirAmount)],,,
          }@op (of all coins),
          where SumStartValue = Sum(CoinStartValue) is only a statistical
-         info (separated from their id) of the coins.
+         info (separated from their id) of the coins. It can be used for 
+         liquidizing by issuing some rcoins as rcoin-to-currency_X, of which
+         dividend is paid in currency_X by using the additional Treasury as
+         Treasury_X. e.g. Treasury_dollar for dividending in dollars. it can 
+         also be integrated with liquidizing to rcoin of other held/holding 
+         rings or to money given to exchange by newcomers or members.
 Worth@My={(is_mine)LastDate=>
         [CoinLifetime(SumStartValue,TheirAmount,
           "-"SumStartValue/CoinLifetime,
@@ -147,7 +155,7 @@ Profiles@op={hash(register)=>[(private info in common including pubkey, id,,)],
       }@op (of all members)
 
 ***/
-/** Issuing coins:  Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op> **
+/** Issuing coins:  Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op, CoinsId@op> **
 before issuing new coins in Coins@op by creating or modifying one record in Treasury@op, their StartValue and ThierAmount should be considered  in distributing them to all Values=@My,Wallet@My, Log@op. When issuing new coins we should care for making no collusion of the hash and for unique random. In issuing we will add to values after grouping amount of items in groups of StartValue.
 
  "printing" coins of respect can be when issuing new cycle of old coin or creating new cycle as the ring creates its coins to projects its (new) Gini, by both:
@@ -176,7 +184,7 @@ Notes:
     Even when the rcoin are only in the ring tradable, still the tradability out of that ring is optional by peer coin, which is the value of accountability-and-ownership of one peer owner, as peer coin is measured by rcoins of other ring, money or money's equivalent.
 
 ****/
-/** Calculus of the Coin: Values=<Worth@My [same-format]Treasury@op>
+/** Calculus of the Coin: Values=<Worth@My [same-format]Treasury@op,,>
 : CoinAge, starting in zero,
   is the time in days for the lifetime of that coin, where in each day
   CoinAge is increased by one as long as CoinAge is smaller than CoinLifetime
