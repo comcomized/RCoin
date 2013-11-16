@@ -2,8 +2,8 @@ CommunalCoin - a coin of respect!
 =================================
 Licensed under the Agpl: http://www.gnu.org/licenses/agpl-3.0.html  
 Preamble: http://namzezam.wdfiles.com/local--files/start/rcoin.txt 
-
-Each member is this prject is to become a peer owner (http://is-with.wikidot.com/) over its source!
+Each member is this prject is to become a peer owner (http://is-with.wikidot.com/) over its source -
+To participate, Let us here: http://communal-coin.wikidot.com/main:contact know your github username!
 Summary
 -------
 
