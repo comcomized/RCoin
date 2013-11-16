@@ -107,14 +107,14 @@ Coins@op = the Movements of all coins starts and ends here. It consists of
     for maintenance of their uniqueness before issuing new coins.
         Q??  should n't Coins@op  have id LastDate Lifetime of coin for no
         collusion and keeping coherence without having StartValue?? 
-CoinsId@op={hash(Coinsid)=>[(Rand)],,,}
-        @op (of all coins), Rand is the last Rand of the translation made 
-         with that coin for to insure no twice payment.
 Wallet@My={hash(id(coin))=>[(Rand,RandPrev,coin)]
        }@My (of this member's coins), where
        only by id(coin) the access to the value of the coin is given!
-Log@op={hash(Rand)=>[(id(Owner),si[Payer](Rand,id(Owner)),Chain)],
-    }@op (of all coins), where Chain=hash(ChianPrev,RandPrev,Id(coin)) and
+CoinsId@op={hash(Coinsid)=>[(Rand)],,,}
+        @op (of all coins), Rand is the last Rand of the translation made 
+         with that coin for to insure no twice payment.       
+Log@op={hash(Rand)=>[(id(Coin),si[Payer](Rand,id(Owner)),Chain)],
+    }@op (of all coins), where Chain=hash(ChianPrev,RandPrev,Id(Owner)) and
     the hash(pic)==id(user) and a unique triplepin is used as a key for all
     such pic, making each pic able to be changed Not as in the biometric info!
 
