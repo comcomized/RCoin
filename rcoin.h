@@ -77,7 +77,7 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 *      }@db                                                                 *
 * related tables:category=<table1@db [connection] table2@db>                *
 * pic          means compressed image                                       *
-* si[x](data)  means signed by x == (data,aep[x](hash(data)))               *
+* si[x](data)  means detached-signed by x == (data,aep[x](hash(data)))      *
 * se[x](data)  means symetrically encrypted data by the key of              *
 * ae[x](data)  means asymetrically encrypted data by the public key  of x   *
 * aep[x](data) means asymetrically encrypted data by the private key of x   *
@@ -107,16 +107,21 @@ Coins@op = the Movements of all coins starts and ends here. It consists of
     for maintenance of their uniqueness before issuing new coins.
         Q??  should n't Coins@op  have id LastDate Lifetime of coin for no
         collusion and keeping coherence without having StartValue?? 
-Wallet@My={hash(id(coin))=>[(Rand,RandPrev,coin)]
+Wallet@My={hash(id(coin))=>[(Rand,RandPrev,coin,id(payer),pub-key(id(payer)))]
        }@My (of this member's coins), where
        only by id(coin) the access to the value of the coin is given!
-CoinsId@op={hash(Coinsid)=>[(Rand)],,,}
+CoinsId@op={hash(id(coin))=>[(Rand)],,,}
         @op (of all coins), Rand is the last Rand of the translation made 
          with that coin for to insure no twice payment.       
 Log@op={hash(Rand)=>[(id(Coin),si[Payer](Rand,id(Owner)),Chain)],
-    }@op (of all coins), where Chain=hash(ChianPrev,RandPrev,Id(Owner)) and
-    the hash(pic)==id(user) and a unique triplepin is used as a key for all
+    }@op (of all coins), where Chain=(hash(ChianPrev,RandPrev),hash(Id(Owner)))
+    and the hash(pic)==id(user) and a unique triplepin is used as a key for all
     such pic, making each pic able to be changed Not as in the biometric info!
+    The Prove of ownership by id(coin), where op has in CoinsId@op Rand equals
+     the Rand the owners pull from Log@op by her/his Wallet@My:  
+     the Rand or RandPrev has the id(coin) and the owner verifies the signature
+      and produces both: the Chain and the hash(Id(Owner) of the ChianPrev,
+       which is the Chain in RandPrev.
 
 Values=<Worth@My [same-format]Treasury@op,,>
 Treasury@op={LastDate=>[CoinLifetime(SumStartValue,TheirAmount)],,,
