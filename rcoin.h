@@ -14,10 +14,15 @@ Use it to build up your economy while bringing more social justice into your
 communities for, by advancing community members to get more than the others,
 only as they are automatically sharing something of their gain with their
 community members.
-        In simple words: When I have 10 rcoins for 10 yeas in a 4 people's
-community, then in the next year I have only 9 rcoins and each member gets
-additional 1/4 rcoin and so, as I earn more than you in your community, you,
-as any other community's member, would get some equal share of it.
+        In simple words: When I have 10 rcoins for 50 yeas in a 4 people's
+community, then in the next year I have only 9.80 rcoins and each member gets
+additional 0.05 rcoin and so, as I earn more than you in your community, you,
+as any other community's member, would get some equal share of it. So it make 
+those who can earn more to be more supported because the other would earn form
+something of that. Additionally, when non of us spend rcoin even though the
+rcoin's  nature of losing value, only those of us having more would lose, as 
+the others are earning and until we got equal and hence it is useful for saving
+communally and not in isolation, for our common interest.
         Use case: A coffee-shop and a bakery are 2 divisions in an association
 named here "ring". The ring buy chocolate and give it for rcoins to
 the bakery and the bakery making from that a cake give it for coins of respect
