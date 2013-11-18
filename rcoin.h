@@ -98,13 +98,18 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 *  Movements    = <Coins@op[id(coin)] Wallet@My [Rand]Log@op,CoinsId@op>    *
 *  Values       =<Worth@My [same-format]Treasury@op>                        *
 *  Identities   =<Self@My[pic]Payers@My , Users@op[register]Profiles@op>    *
+*  |-----------------------------------------------------------------------|*
+*  |  category     |     @op               |    @My        |  using time   |*
+*  |---------------|-----------------------|---------------|---------------|*
+*  |Movements      |Coins ,  CoinsId, Log  |Wallet         | Payment       |*
+*  |Values         |Treasury               |Worth          | Calculation   |*
+*  |Identities     |Users,   Profiles      |Self,  Payers  | Authentication|*
+*  |-----------------------------------------------------------------------|*
 * Any access/modification in sensitive and common area is resulted in       *
 *  parallel notification to all other members or operators                  *
 * note: in big communities it my be considered to use hierarchies of hubs   *
 * being operators for schemas of notification such as peer to op as peer to *
 * next op etc.                                                              *
-
-
 Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op,CoinsId@op>
 Coins@op = the Movements of all coins starts and ends here. It consists of
     One table having one record having 2 blob: 1 of all Hash(Id(coin))
@@ -286,8 +291,7 @@ typedef struct rcoin_type{ /**as a c++ class rcoin, but initialized as c file gl
 int (*Escape)(void);        /** rcoin_Escape Destructor*/
 int (*New)(void);           /** rcoin_New Constructor*/
 char **man;
-char member_is_operator;
-/**                           sqlile members:*/
+char member_is_operator;/**           sqlile members:*/
 sqlite3 *My_db,*Op_db;       /** using only these db*/
 char *Err;                  /** error msg by sqlite*/
 int (*open)(void);          /** rcoin_open*/
@@ -296,7 +300,7 @@ int (*sql)(char *);         /** rcoin_sql*/
 coin_calc_type calc;    /** rcoin calculus:*/
 }rcoin_type;
 #endif                       /** end of defined_rcoin*/
-/******--------- ~InProcess: to sort out from here----------*******
+/******--------- ~InProcess: to sort out from here----------******/
 /** The format of TablesOfCoins is,
              table-name    = Coins(is_mine)LastDate,
              key           = CoinStartValue,
