@@ -1,14 +1,19 @@
-/*** Licensed under the Agpl: http://www.gnu.org/licenses/agpl-3.0.html    ***/
-/***    Author: http://namzezam.wikidot.com/                               ***/
-/***    Preamble: http://namzezam.wdfiles.com/local--files/start/rcoin.txt ***/
+/*** Licensed under the Agpl: http://www.gnu.org/licenses/agpl-3.0.html ***/
+/*** Author: http://namzezam.wikidot.com/                               ***/
+/*** Preamble: http://namzezam.wdfiles.com/local--files/start/rcoin.txt ***/
+/*** Document's Structure:
+~Concept; ~Terminology&principles;~Tables&Legend;~Issuing-coins;~Coin's-Calculus;
+~Authentication;~code;~InProcess, where  *** this is folded */
 #ifndef defined_rcoin
-#define defined_rcoin   /** rcoin - A coin of respect is a time limited and
-equally re-distributed cyclic and communal coin. It is daily and gradually
-losing its value, which is equally gained by the community members. It is not money, nor an equivalent to money, but still a medium of exchange, a credit for
-exchange and an inner community evaluation tool. Use it to build up your economy while bringing more social justice into your communities for, by
-advancing community members to get more than the others, only as they are
-automatically sharing something of their gain with their community
-members.
+#define defined_rcoin /*** ~Concept: rcoin - A coin of respect is       ***
+a time limited and equally re-distributed cyclic and communal coin.
+It is daily and gradually losing its value, which is equally gained by the
+community members. It is not money, nor an equivalent to money, but still a
+medium of exchange, a credit for exchange and an inner community evaluation tool.
+Use it to build up your economy while bringing more social justice into your
+communities for, by advancing community members to get more than the others,
+only as they are automatically sharing something of their gain with their
+community members.
         In simple words: When I have 10 rcoins for 10 yeas in a 4 people's
 community, then in the next year I have only 9 rcoins and each member gets
 additional 1/4 rcoin and so, as I earn more than you in your community, you,
@@ -57,7 +62,7 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 
 
 */
-/*** Terminology and some principles for the rcoin:                         *
+/*** ~Terminology&Principles for the rcoin:                                ***
 * The Communication between members is only by asymmetric keys.             *
 * id(coin) is a unique&random int.                                          *
 * Payer is the previous Owner of a coin.                                    *
@@ -65,14 +70,14 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 *  The owner in payment should first see the payer then type the triplepin  *
 *  by which the pic is retrieved, and only after the pic matches the payer, *
 *  that pic should be hashed and used/compared as an id. Hence such protocol*
-* is based on a human recognition (and not on the one of machine).   *
+* is based on a human recognition (and not on the one of machine).          *
 * Rand, used as a transaction id in the distributed log, is a unique and    *
 *  random number, which is used as a receipt. It is produced by the Payer   *
 *  distributing that record; So that in payment, when paying and after      *
 *  proving ownership, the payer sign the new owner's id with the payer's    *
 *  rand, to create her/his new distributed record(rans).                    *
-***                                                                      ***/
-/*** The Tables  & their Legend search: ?{?=>[?]}@                        ***
+***                                                                       ***/
+/*** ~Tables&Legend, search: ?{?=>[?]}@                                   ***
 * table{key=>[col(value)]                                                   *
 *      }@db                                                                 *
 * related tables:category=<table1@db [connection] table2@db>                *
@@ -97,41 +102,45 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 *  parallel notification to all other members or operators                  *
 * note: in big communities it my be considered to use hierarchies of hubs   *
 * being operators for schemas of notification such as peer to op as peer to *
-* next op etc.*
+* next op etc.                                                              *
 
 
 Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op,CoinsId@op>
 Coins@op = the Movements of all coins starts and ends here. It consists of
     One table having one record having 2 blob: 1 of all Hash(Id(coin))
-    of valid coins and the other of those which are expired,to be used
+    of valid coins (parallel to CoinsId@op )and the other of those
+    which are expired, to be used
     for maintenance of their uniqueness before issuing new coins.
         Q??  should n't Coins@op  have id LastDate Lifetime of coin for no
-        collusion and keeping coherence without having StartValue?? 
+        collusion and keeping coherence without having StartValue??
 Wallet@My={hash(id(coin))=>[(Rand,RandPrev,coin,id(payer),pub-key(id(payer)))]
        }@My (of this member's coins), where
        only by id(coin) the access to the value of the coin is given!
-CoinsId@op={hash(id(coin))=>[(Rand)],,,}
-        @op (of all coins), Rand is the last Rand of the translation made 
-         with that coin for to insure no twice payment.       
-Log@op={hash(Rand)=>[(id(Coin),si[Payer](Rand,id(Owner)),Chain)],
+CoinsId@op={hash(id(coin))=>[(Rand),N],,,}
+        @op (of all coins), Rand is the last Rand of the translation made
+         with that coin for to insure no twice payment and, used for the prove
+         of continuity, N is increased by 1 with each transaction of the coin.
+Log@op={hash(Rand)=>[(Nhash(id(Coin)),si[Payer](Rand,id(Owner)),Chain)],
     }@op (of all coins), where Chain=(hash(ChianPrev,RandPrev),hash(Id(Owner)))
     and the hash(pic)==id(user) and a unique triplepin is used as a key for all
     such pic, making each pic able to be changed Not as in the biometric info!
     The Prove of ownership by id(coin), where op has in CoinsId@op Rand equals
-     the Rand the owners pull from Log@op by her/his Wallet@My:  
+     the Rand the owners pull from Log@op by her/his Wallet@My:
      the Rand or RandPrev has the id(coin) and the owner verifies the signature
       and produces both: the Chain and the hash(Id(Owner) of the ChianPrev,
        which is the Chain in RandPrev.
-
+       N is the number of hashes implemented on itself beginning in id(coin)
+       and ending in Nhash, for creating a prove of continuity. So, having the
+       id(coin) and n you can create the Nhash.
 Values=<Worth@My [same-format]Treasury@op,,>
 Treasury@op={LastDate=>[CoinLifetime(SumStartValue,TheirAmount)],,,
          }@op (of all coins),
          where SumStartValue = Sum(CoinStartValue) is only a statistical
-         info (separated from their id) of the coins. It can be used for 
+         info (separated from their id) of the coins. It can be used for
          liquidizing by issuing some rcoins as rcoin-to-currency_X, of which
          dividend is paid in currency_X by using the additional Treasury as
-         Treasury_X. e.g. Treasury_dollar for dividending in dollars. it can 
-         also be integrated with liquidizing to rcoin of other held/holding 
+         Treasury_X. e.g. Treasury_dollar for dividending in dollars. it can
+         also be integrated with liquidizing to rcoin of other held/holding
          rings or to money given to exchange by newcomers or members.
 Worth@My={(is_mine)LastDate=>
         [CoinLifetime(SumStartValue,TheirAmount,
@@ -160,10 +169,10 @@ Profiles@op={hash(register)=>[(private info in common including pubkey, id,,)],
       }@op (of all members)
 
 ***/
-/** Issuing coins:  Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op, CoinsId@op> **
+/*** ~Issuing-coins: Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op, CoinsId@op> **
 before issuing new coins in Coins@op by creating or modifying one record in Treasury@op, their StartValue and ThierAmount should be considered  in distributing them to all Values=@My,Wallet@My, Log@op. When issuing new coins we should care for making no collusion of the hash and for unique random. In issuing we will add to values after grouping amount of items in groups of StartValue.
 
- "printing" coins of respect can be when issuing new cycle of old coin or creating new cycle as the ring creates its coins to projects its (new) Gini, by both:
+ "printing" coins of respect can be done when issuing new cycle of old coin or creating new cycle as the ring creates its coins to projects its (new) Gini, by both:
 
     A) maintaining its social obligation amounted to Mini guaranteeing minimal amount of coins per each of its members and
     B) by delivering an additional equal dividend D to each of its members,
@@ -189,7 +198,7 @@ Notes:
     Even when the rcoin are only in the ring tradable, still the tradability out of that ring is optional by peer coin, which is the value of accountability-and-ownership of one peer owner, as peer coin is measured by rcoins of other ring, money or money's equivalent.
 
 ****/
-/** Calculus of the Coin: Values=<Worth@My [same-format]Treasury@op,,>
+/*** ~Coin's-Calculus: Values=<Worth@My [same-format]Treasury@op,,>
 : CoinAge, starting in zero,
   is the time in days for the lifetime of that coin, where in each day
   CoinAge is increased by one as long as CoinAge is smaller than CoinLifetime
@@ -210,7 +219,7 @@ triggered by collecting the Dividend from all members and can be depended on
 some regulations such as of big Dividend per member and/or  time period
 defined by default or some decisions.
 */
-/** Authentication: Identities=<Self@My[pic]Payers@My, Users@op[register]Profiles@op> ***
+/*** ~Authentication: Identities=<Self@My[pic]Payers@My, Users@op[register]Profiles@op> ***
 Hashed Pic Id Authentication as a simple practice for member's
 authentication (from http://namzezam.wikidot.com/blog:5):
     In initiation, The members exchange an encrypted asymmetrically pic
@@ -235,6 +244,7 @@ of self is optionally shared in transaction.
         1) the seen member is the one being shown in the image and
         2) the hash of that image is identical to the id of the seen member.
 */
+/*** ~code.. ***/
 int rcoin_New(void);   /** as a Constructor */
 int rcoin_Escape(void);/** as a C++ Destructor*/
 int rcoin_open(void);  /**Opening db in the (encrypted) directory of the app.*/
@@ -261,6 +271,32 @@ typedef struct coin_info_type {/** 16bytes constant values per coin*/
 #include <\
 time.h>       /** as the coin's value are time dependent.
  int daysSinceEpoch=(((time_t)time(NULL))/86400);*/
+float rcoin_CoinValue(coin_info_type *);  /** */
+float rcoin_MemberDividend(coin_info_type * );  /** */
+typedef struct coin_calc_type{
+ int LastCalculatedDate,TodayDate;// =(((time_t)time(NULL)) / 86400);
+ //int Age;// CoinAge = r.calc.TodayDate+r.calc.info->Lifetime-r.calc.info->LastDate;
+ //(((time_t)time(NULL)) / 86400)+Lifetime-LastDate
+ int MembersAmount;
+ float (*CoinValue)(coin_info_type *);
+ float (*MemberDividend)(coin_info_type * );
+}coin_calc_type;
+/***/
+typedef struct rcoin_type{ /**as a c++ class rcoin, but initialized as c file global:*/
+int (*Escape)(void);        /** rcoin_Escape Destructor*/
+int (*New)(void);           /** rcoin_New Constructor*/
+char **man;
+char member_is_operator;
+/**                           sqlile members:*/
+sqlite3 *My_db,*Op_db;       /** using only these db*/
+char *Err;                  /** error msg by sqlite*/
+int (*open)(void);          /** rcoin_open*/
+int (*sql)(char *);         /** rcoin_sql*/
+/***/
+coin_calc_type calc;    /** rcoin calculus:*/
+}rcoin_type;
+#endif                       /** end of defined_rcoin*/
+/******--------- ~InProcess: to sort out from here----------*******
 /** The format of TablesOfCoins is,
              table-name    = Coins(is_mine)LastDate,
              key           = CoinStartValue,
@@ -270,10 +306,8 @@ time.h>       /** as the coin's value are time dependent.
              CoinValue     = StartValue -((StartValue * CoinAge)/Lifetime));
              CoinAge       = TodayDate  + Lifetime - LastDate;
              and where the format of their TableOfValues is
-*/
-/**[no need for Treasury in format TablesOfCoins in My_db, but instead of
- Treasury in op.db in format TableOfValues having no coins of is_mine==1. */
-/**???
+*//***[no need for Treasury in format TablesOfCoins in My_db, but instead of
+ Treasury in op.db in format TableOfValues having no coins of is_mine==1. *//**???
              key           = (is_mine)LastDate
              column-name   = CoinLifetime
              Value         =  (+or-)daliychange, currentvalue,
@@ -341,8 +375,7 @@ only id(coin)?
        If the coins are of others, then is_mine=0, otherwise is_mine=1.
 
 
-*/
-/******--------- to sort out from here----------*******
+*//**
 
 Definitions, where ae[member](record) is the default way to distribute a
 record for the 4 db in the encrypted directly including this app the 2
@@ -400,28 +433,3 @@ by .CoinValue)
 3.Users:   ae[member]{hash(id(member))=>triplepin,ae[Owner](rand[n],hash(rand[n-1]))}
 4.   Profiles:   ae[member]{{hash(rand[n])=>info(user, patrly ae[user])}
 */
-float rcoin_CoinValue(coin_info_type *);  /** */
-float rcoin_MemberDividend(coin_info_type * );  /** */
-typedef struct coin_calc_type{
- int LastCalculatedDate,TodayDate;// =(((time_t)time(NULL)) / 86400);
- //int Age;// CoinAge = r.calc.TodayDate+r.calc.info->Lifetime-r.calc.info->LastDate;
- //(((time_t)time(NULL)) / 86400)+Lifetime-LastDate
- int MembersAmount;
- float (*CoinValue)(coin_info_type *);
- float (*MemberDividend)(coin_info_type * );
-}coin_calc_type;
-/***/
-typedef struct rcoin_type{ /**as a c++ class rcoin, but initialized as c file global:*/
-int (*Escape)(void);        /** rcoin_Escape Destructor*/
-int (*New)(void);           /** rcoin_New Constructor*/
-char **man;
-char member_is_operator;
-/**                           sqlile members:*/
-sqlite3 *My_db,*Op_db;       /** using only these db*/
-char *Err;                  /** error msg by sqlite*/
-int (*open)(void);          /** rcoin_open*/
-int (*sql)(char *);         /** rcoin_sql*/
-/***/
-coin_calc_type calc;    /** rcoin calculus:*/
-}rcoin_type;
-#endif                       /** end of defined_rcoin*/
