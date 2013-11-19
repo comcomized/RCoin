@@ -126,12 +126,12 @@ Coins@op = the Movements of all coins starts and ends here. It consists of
 Wallet@My={hash(id(coin))=>[(Rand,RandPrev,coin,id(payer),pub-key(id(payer)))]
        }@My (of this member's coins), where
        only by id(coin) the access to the value of the coin is given!
-CoinsId@op={hash(id(coin))=>[(Rand),N],,,}
-        @op (of all coins), Rand is the last Rand of the translation made
+CoinsId@op={hash(id(coin))=>[(Rand),N],,,
+       }@op (of all coins), Rand is the last Rand of the translation made
          with that coin for to insure no twice payment and, used for the prove
          of continuity, N is increased by 1 with each transaction of the coin.
 Log@op={hash(Rand)=>[(Nhash(id(Coin)),si[Payer](Rand,id(Owner)),Chain)],
-    }@op (of all coins), where Chain=(hash(ChianPrev,RandPrev),hash(Id(Owner)))
+    }@op (of all coins), where Chain=(hash(ChianPrev),hash(RandPrev,Id(Owner)))
     and the hash(pic)==id(user) and a unique triplepin is used as a key for all
     such pic, making each pic able to be changed Not as in the biometric info!
     The Prove of ownership by id(coin), where op has in CoinsId@op Rand equals
@@ -140,8 +140,20 @@ Log@op={hash(Rand)=>[(Nhash(id(Coin)),si[Payer](Rand,id(Owner)),Chain)],
       and produces both: the Chain and the hash(Id(Owner) of the ChianPrev,
        which is the Chain in RandPrev.
        N is the number of hashes implemented on itself beginning in id(coin)
-       and ending in Nhash, for creating a prove of continuity. So, having the
-       id(coin) and n you can create the Nhash.
+       and ending in Nhash , for creating a prove of continuity. So, having the
+       id(coin) and N you can create the Nhash of the N, 
+       where Nhash(N) =hash(Nhash(N++)) .
+Protocol of Payment: payer send pub-enc to all op 
+1) prove ownership, 2) new transaction and 3) new Rand and N to replace the one
+in Coins@op and of which hash indexes the transaction as a new record in Log@op.
+Each op before creating the record verifies the transaction and only on success 
+sends success-signal to other op and only after all op agree on success they 
+create the transaction as a new record in Log@op. 
+The verification is successful only when Nhash all the way from the id(coin) and
+until N is coherent and N-1 and si[payer] together with hash(Id(Owner,RandPrev)
+(included in Chain) on RandPrev are reproduced and coherent.
+Protocol of Issuing-coins: see ~Issuing-coins.
+       
 Values=<Worth@My [same-format]Treasury@op,,>
 Treasury@op={LastDate=>[CoinLifetime(SumStartValue,TheirAmount)],,,
          }@op (of all coins),
@@ -161,12 +173,13 @@ Worth@My={(is_mine)LastDate=>
        }@My (of this member's coins), where
        SumValue = SumStartValue
              -((SumStartValue *(TodayDate+Lifetime-LastDate))/Lifetime)
-       is the only the one which is daily changing.
+       is the only the one which is daily changing.   
+Protocol of calculation: see ~Coin's-Calculus.
 
 Identities=<Self@My[pic]Payers@My, Users@op[register]Profiles@op>
 Self@My= {date-of-creation =>[(pic of mine)],
       }@My (of this member)
-Payers@My={hash(triplepin)=>[(id=hash(pic))],
+Payers@My={hash(triplepin)=>[(id=hash(pic),pubkey)],
       }@My (of authenticated members by this member),
      Used as in WebOfTrust, such that the payer sends
      enc(hash(triple),id,pic) and these 3 conditions has been met:
@@ -175,9 +188,14 @@ Payers@My={hash(triplepin)=>[(id=hash(pic))],
      3. triplepin of the payer in Users@op+Profile@op is verified.
 Users@op= {hash(triplepin) =>[(register=ALL(hash(pic(member)),,))],
       }@op (of all members), payers ae to be verified.
-Profiles@op={hash(register)=>[(private info in common including pubkey, id,,)],
+Profiles@op={hash(register)=>[(personal info in common: pubkey, id=hash(pic,,)],
       }@op (of all members)
-
+Protocol of Authentication (also see ~Authentication): The payer delivers both: 
+triplepin and pic, by typing and handing and/or by sending the information 
+encrypted with pubkey of the seller (to become owner of the coin). Only after 
+the seller recognize the payer in the pic, the seller hashes the pic and uses
+the triplepin in Payers@My or Users@op+Profiles@op to verify by matching the 
+hash=id.  
 ***/
 /*** ~Issuing-coins: Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op, CoinsId@op> **
 before issuing new coins in Coins@op by creating or modifying one record in Treasury@op, their StartValue and ThierAmount should be considered  in distributing them to all Values=@My,Wallet@My, Log@op. When issuing new coins we should care for making no collusion of the hash and for unique random. In issuing we will add to values after grouping amount of items in groups of StartValue.
@@ -214,8 +232,8 @@ Notes:
   CoinAge is increased by one as long as CoinAge is smaller than CoinLifetime
   and where MembersCount is the number of members in the community issuing
   the coin, such that
-  CoinValue             = CoinStartValue * (1- CoinAge/CoinLifetim),
-  MemberDividend        = (CoinStartValue/MembersCount)*(CoinAge++/CoinLifetim)
+  CoinValue             = CoinStartValue * (1- CoinAge/CoinLifetime),
+  MemberDividend        = (CoinStartValue/MembersCount)*(CoinAge++/CoinLifetime)
   and CoinAge++, so that daily CoinValue  -= OwnerDailyLost, where
   OwnerDailyLost        = CoinStartValue     / CoinLifetime and
   MemberDailyEarning    = OwnerDailyLost     / MembersCount.
@@ -370,7 +388,7 @@ Profiles:(of all members){hash(register)=>(private info in common)}
              += MemberDailyEarning*amountof suchcoins.
                 table-name=OwnerDailyLost=
                       CoinStartValue/CoinLifetime: key(id),CoinValue, LastDate,
- to finsh the Values so that the Coinvalue is the -change memeberdedens..
+ to finish the Values so that the Coinvalue is the -change memeberdedens..
         and the const change ...
                  table-name=MemberDailyEarning:CoinValue, LastDate
 
