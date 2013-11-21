@@ -20,9 +20,9 @@ additional 0.05 rcoin and so, as I earn more than you in your community, you,
 as any other community's member, would get some equal share of it. So it make 
 those who can earn more to be more supported because the other would earn form
 something of that. Additionally, when non of us spend rcoin even though the
-rcoin's  nature of losing value, only those of us having more would lose, as 
-the others are earning and until we got equal and hence it is useful for saving
-communally and not in isolation, for our common interest.
+rcoin nature is of losing value, only those of us having more would lose, as 
+the others are earning, but only until we got equal and hence it is useful for
+saving communally and not in isolation, for our common interest.
         Use case: A coffee-shop and a bakery are 2 divisions in an association
 named here "ring". The ring buy chocolate and give it for rcoins to
 the bakery and the bakery making from that a cake give it for coins of respect
@@ -68,7 +68,10 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 
 */
 /*** ~Terminology&Principles for the rcoin:                                ***
-* The Communication between members is only by asymmetric keys.             *
+* The Communication between members is only by asymmetric keys,             *
+* as the public key indexes the last thread (pubK(u) ->t[n]),               *
+* t[n]=hash(msg[n],t[n-1]) and the first thread, t[0], is send as Hashcash, *
+* meaning with x ,where k is number of bits, x is random and kmsb(t[0]==0). *
 * id(coin) is a unique&random int.                                          *
 * Payer is the previous Owner of a coin.                                    *
 * id(member)=hash(pic(member));Changeable + retrievable by triplepin(member)*
