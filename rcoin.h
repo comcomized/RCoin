@@ -68,10 +68,12 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 
 */
 /*** ~Terminology&Principles for the rcoin:                                ***
-* The Communication between members is only by asymmetric keys,             *
-* as the public key indexes the last thread (pubK(u) ->t[n]),               *
-* t[n]=hash(msg[n],t[n-1]) and the first thread, t[0], is send as Hashcash, *
-* meaning with x ,where k is number of bits, x is random and kmsb(t[0]==0). *
+* The Communication of threads between members is by asymmetric keys, where *
+*  threads, per each message n in an otr conversation, are defined so that  *
+* t[n]=(message[n],date,hash(t[n-1])),                                      *
+* hash(t[n]) is indexed by public_key(sender) and                           *
+* t[0]=(id(receiver),date,x), where, as in hashcach K(hash(t[0]))==0,       *
+* K is defined by number of bits to be examined and x is a random.          *
 * id(coin) is a unique&random int.                                          *
 * Payer is the previous Owner of a coin.                                    *
 * id(member)=hash(pic(member));Changeable + retrievable by triplepin(member)*
