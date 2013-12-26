@@ -136,6 +136,40 @@ of only the original being a square of which diagonal=160 pixels. */
 * note: in big communities it my be considered to use hierarchies of hubs   *
 * being operators for schemas of notification such as peer to op as peer to *
 * next op etc.                                                              *
+||------------------------||------------------------||------------------------||
+|| table:                 ||              @Op       ||          @My           ||
+||Key=>                   ||                        ||                        ||
+||[col1(value1,value2)|   ||                        ||                        ||
+||col2(value3)]           ||                        ||                        ||
+||------------------------||------------------------||------------------------||
+|| Movements in           || Coins: 2blob of all    ||                        ||
+|| recycling              || valid and expired      ||                        ||
+||                        || Hash(Id(coin))         ||                        ||
+||------------------------||------------------------||------------------------||
+|| Movements in           || CoinsID:hash(id(coin))<id(coin)>                 ||
+|| Payment                || =>[(Rand,N)]           || Wallet:hash(id(coin))=>||
+||                        ||         ----           ||[(Rand, RandPrev, Coin, ||
+||                        || Log:hash(Rand)=>   <Rand>  id(payer),            ||
+||                        ||[(Nhash(id(Coin)),      ||   pub-key(id(payer)))] ||
+||                        ||si[Payer](Rand,         ||                        ||
+||                        ||id(Owner)),             ||                        ||
+||                        ||Chain)]                 ||                        ||
+||------------------------||------------------------||------------------------||
+||  Values in Calculation ||Treasury:LastDate=>     <*> Worth:LastDate=>      ||
+||                        ||  [CoinLifetime(        || [CoinLifetime(         ||
+||                        ||   SumStartValue,       ||  SumStartValue,        ||
+||                        ||   TheirAmount)|...|]   ||  TheirAmount...)|...|] ||
+||------------------------||------------------------||------------------------||
+|| Identities in          ||    <register>      <triplepin>         <pic>     ||
+||  Authentication        ||                         ||                       ||
+||                        ||Users:hash(triplepin)=>  ||Payers:hash(triplepin)=>|
+||                        ||[(register=ALL(hash(     ||[(id=hash(pic),pubkey)]||
+||                        ||pic(member)),,))]        ||           ----        ||
+||                        ||         ----            ||Self:CreatingDate =>   ||
+||                        ||Profiles:hash(register)=>||[(pic of mine)]        ||
+||                        ||[(personal info in common||                       ||
+||                        || pubkey, id=hash(pic,,)] ||                       ||
+||------------------------||-------------------------||-----------------------||
 Movements = <Coins@op[id(coin)] Wallet@My [Rand]Log@op,CoinsId@op>
 Coins@op = the Movements of all coins starts and ends here. It consists of
     One table having one record having 2 blob: 1 of all Hash(Id(coin))
