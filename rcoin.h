@@ -63,10 +63,22 @@ and lifetime ==Wavelength ( faster/lighter<-> slower/heavier).
 The study of changes in a line value of the coin's holder versus in a plane
 value of other members can be made in 3d and 1 colour, where X = CoinAge,
 Y = CoinValue and Z = MembersCount or in 2d and 2 colours: one of the owner
-and the other of members (and as X = CoinAge and Y= CoinValue).
+and the other of members (and as X = CoinAge and Y= CoinValue).*/
 
+/* The use of the composition is as a key for hashed picture. 
+The composition is a set of pairs of (diagonal, angle), defining a sequence of 
+rectangles from top-left to right, then return and down, where each rectangle is
+hashed (separately to a predefined size) and all rectangles in their order
+define together the (id as a) reference to the picture (as that reference could
+be hashed again for to be squeezed again to a predefined size), but as the 
+composition is given separately (in a specific transaction) and as the 
+composition can be overflowing the rectangle of the original picture, so that 
+when (diagonal==0) goto next line (return and down) and 
+if ( diagonal==0 and angle==0 ) then the next 2 pairs are of the original 
+picture (first of the position of its top left corner and the second of itself) 
+and then terminate. eg: (0,0)(0,0)(45,160) is the non-overflowing composition 
+of only the original being a square of which diagonal=160 pixels. */
 
-*/
 /*** ~Terminology&Principles for the rcoin:                                ***
 * The Communication of threads between members is by asymmetric keys, where *
 *  threads, per each message n in an otr conversation, are defined so that  *
@@ -74,6 +86,10 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 * hash(t[n]) is indexed by public_key(sender) and                           *
 * t[0]=(id(receiver),date,x), where, as in hashcach K(hash(t[0]))==0,       *
 * K is defined by number of bits to be examined and x is a random.          *
+* The triplepin is the unique id of the member, which is given only in      *
+* community depended conditions, such as only after having some             *
+* recommenders for the uniqueness and the form of meeting with the member   *
+* and of the recommenders.                                                  *
 * id(coin) is a unique&random int.                                          *
 * Payer is the previous Owner of a coin.                                    *
 * id(member)=hash(pic(member));Changeable + retrievable by triplepin(member)*
@@ -88,7 +104,7 @@ and the other of members (and as X = CoinAge and Y= CoinValue).
 *  rand, to create her/his new distributed record(rans).                    *
 ***                                                                       ***/
 /*** ~Tables&Legend, search: ?{?=>[?]}@                                   ***
-* table{key=>[col(value)]                                                   *
+* table{key=>[col(value1,value2)|col2(value3)]                              *
 *      }@db                                                                 *
 * related tables:category=<table1@db [connection] table2@db>                *
 * pic          means compressed image                                       *
@@ -131,7 +147,7 @@ Coins@op = the Movements of all coins starts and ends here. It consists of
 Wallet@My={hash(id(coin))=>[(Rand,RandPrev,coin,id(payer),pub-key(id(payer)))]
        }@My (of this member's coins), where
        only by id(coin) the access to the value of the coin is given!
-CoinsId@op={hash(id(coin))=>[(Rand),N],,,
+CoinsId@op={hash(id(coin))=>[(Rand,N])
        }@op (of all coins), Rand is the last Rand of the translation made
          with that coin for to insure no twice payment and, used for the prove
          of continuity, N is increased by 1 with each transaction of the coin.
@@ -159,8 +175,8 @@ until N is coherent and N-1 and si[payer] together with hash(Id(Owner,RandPrev)
 (included in Chain) on RandPrev are reproduced and coherent.
 Protocol of Issuing-coins: see ~Issuing-coins.
        
-Values=<Worth@My [same-format]Treasury@op,,>
-Treasury@op={LastDate=>[CoinLifetime(SumStartValue,TheirAmount)],,,
+Values=<Worth@My [same-format]Treasury@op|...|>
+Treasury@op={LastDate=>[CoinLifetime(SumStartValue,TheirAmount)]|...|,
          }@op (of all coins),
          where SumStartValue = Sum(CoinStartValue) is only a statistical
          info (separated from their id) of the coins. It can be used for
@@ -174,7 +190,7 @@ Worth@My={(is_mine)LastDate=>
           "-"SumStartValue/CoinLifetime,
           "+"SumStartValue/(CoinLifetime*MembersAmount) ,
             List(StartValue,id(coin)),
-            SumValue)],,,
+            SumValue)]|...|,
        }@My (of this member's coins), where
        SumValue = SumStartValue
              -((SumStartValue *(TodayDate+Lifetime-LastDate))/Lifetime)
