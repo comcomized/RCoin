@@ -65,19 +65,22 @@ value of other members can be made in 3d and 1 colour, where X = CoinAge,
 Y = CoinValue and Z = MembersCount or in 2d and 2 colours: one of the owner
 and the other of members (and as X = CoinAge and Y= CoinValue).*/
 
-/* The use of the composition is as a key for hashed picture. 
-The composition is a set of pairs of (diagonal, angle), defining a sequence of 
-rectangles from top-left to right, then return and down, where each rectangle is
-hashed (separately to a predefined size) and all rectangles in their order
-define together the (id as a) reference to the picture (as that reference could
-be hashed again for to be squeezed again to a predefined size), but as the 
-composition is given separately (in a specific transaction) and as the 
-composition can be overflowing the rectangle of the original picture, so that 
-when (diagonal==0) goto next line (return and down) and 
-if ( diagonal==0 and angle==0 ) then the next 2 pairs are of the original 
-picture (first of the position of its top left corner and the second of itself) 
-and then terminate. eg: (0,0)(0,0)(45,160) is the non-overflowing composition 
-of only the original being a square of which diagonal=160 pixels. */
+/* The use of the composition is as a key for hashed picture. The composition is 
+a set of the pair of arguments: (diagonal, angle), together defining a sequence
+of rectangles, such that:
+ Each rectangle is hashed separately in the crop defined by its arguments;
+ The composition is given separately (in a specific transaction) and all 
+  rectangles in their order define together the reference to the 
+  picture and reference could be hashed again for to be squeezed again 
+  to a predefined size (used as an id);
+ Overlapping means hashing part of hidden rectangle with the shown one;
+ In each cycle the shortest rectangle on wall defines the highest of all others;
+ The first two zeros define the containing rectangle and each other zero define
+  changing direction until the pair of zeros that define the end after which 
+  the next 2 pairs are of the original picture (first of the position of its 
+  top left corner and the second of itself) and then terminate.
+eg: (0,0)(0,0)(45,400) is the non-overflowing composition of only the 
+original being a square of which diagonal=400 pixels.*/
 
 /*** ~Terminology&Principles for the rcoin:                                ***
 * The Communication of threads between members is by asymmetric keys, where *
